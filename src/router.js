@@ -1,28 +1,28 @@
 import Vue from "vue";
 import vueRouter from "vue-router";
-import Users from './views/Users.vue'
-import Home from './views/Home.vue'
-import Albums from './views/Albums.vue'
-import Photos from './views/Photos.vue'
+
+function loadView(view) {
+  return () => import(`./views/${view}.vue`);
+}
 
 
 const routes = [{
     path: '/',
-    component: Home
+    component: loadView('Home')
   },
   {
     path: '/albums/:userId',
-    component: Albums,
+    component: loadView('Albums'),
     name: 'Albums'
   },
   {
     path: '/photos/:userId',
-    component: Photos,
+    component: loadView('Photos'),
     name: 'Photos'
   },
   {
     path: '/users',
-    component: Users
+    component: loadView('Users')
   },
 ]
 
@@ -31,12 +31,5 @@ const router = new vueRouter({
   mode: "history",
   routes // short for `routes: routes`
 })
-
-
-
-// function loadView(view) {
-//   return () => import(`./views/${view}.vue`);
-// }
-
 
 export default router;
